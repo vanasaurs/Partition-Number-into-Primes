@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Partition Number into Primes</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Partition Number into Primes</h1>
+</header>
+<p>For <span class="math inline">\(n \in \mathbb{N}\)</span>, let <span
+class="math display">\[p(n) = \operatorname{card} \left\{ (k_1, k_2,
+\dots) \in \mathbb{N}: k_1 p_1 + k_2 p_2 + \dots = n \right\},\]</span>
+where <span class="math inline">\(\{p_j\}\)</span> denotes the sequence
+of primes in increasing order.</p>
+<p>Let <span class="math display">\[\Phi(z) : \mathbb{D} \to \mathbb{C},
+\quad z \mapsto \sum_{n=0}^\infty p(n) z^n\]</span> be a generating
+function, where <span class="math inline">\(\mathbb{D}\)</span> denotes
+the unit disc in <span class="math inline">\(\mathbb{C}\)</span>. By the
+classical partition function for <span class="math inline">\(n \in
+\mathbb{N}\)</span>, we see that <span
+class="math inline">\(\Phi(z)\)</span> is holomorphic in this
+region.</p>
+<p>Suppose that <span class="math inline">\(0 &lt; \rho &lt; 1\)</span>.
+With a change of variable from <span class="math inline">\(z \to \rho \,
+\mathrm{e(z)}\)</span>, we have <span class="math display">\[p(n) =
+\int_C \Phi(z) z^{-n-1} \, \mathrm{d}z
+       = \rho^{-n} \int_{-\pi}^{\pi} \Phi(\rho \, \mathrm{e(z)}) \,
+\mathrm{e(-n z)} \, \mathrm{d}z.\]</span> Moreover, if one writes for
+<span class="math inline">\(x \in (0, \infty)\)</span>, let <span
+class="math display">\[f(x) = \rho^{-x} \int_{-\pi}^{\pi} \Phi(\rho \,
+\mathrm{e(z)}) \, \mathrm{e(-nz)} \, \mathrm{d}z,\]</span> then <span
+class="math inline">\(f\)</span> is analytic.</p>
+<p>Clearly, <span class="math display">\[\Phi(z) = \prod_{p}
+\sum_{k=0}^\infty z^{k p}
+          = \prod_{p} (1 - z^p)^{-1}.\]</span> It is evident that for
+every <span class="math inline">\(k \in \mathbb{N}\)</span> and <span
+class="math inline">\(\rho \in (0,1)\)</span>, <span
+class="math display">\[\Phi^k(\rho) &gt; 0, \quad\text{and}\]</span>
+<span class="math display">\[\Phi^k(\rho) \to \infty \quad \text{as}
+\quad \rho \to 1^{-}.\]</span></p>
+<p>Let <span class="math display">\[\Psi(z) : \mathbb{D} \to \mathbb{C},
+\quad z \mapsto \sum_{p} \sum_{k=1}^\infty \frac{z^{k p}}{k}.\]</span>
+Note <span class="math display">\[\log(\Phi(z)) = - \sum_{p} \log(1 -
+z^p)
+                = \sum_{p} \sum_{k=1}^\infty \frac{z^{k p}}{k}
+                = \Psi(z),\]</span> so that <span
+class="math display">\[\Phi(z) = \exp\big( \Psi(z) \big).\]</span></p>
+<p>Moreover, for every <span class="math inline">\(k \in
+\mathbb{N}\)</span> and <span class="math inline">\(\rho \in
+(0,1)\)</span>, <span class="math display">\[\Psi^{(k)}(\rho) &gt; 0
+  \quad\text{and}\quad
+  \Psi^{(k)}(\rho) \to \infty \quad \text{as} \quad \rho \to
+1^{-}.\]</span></p>
+<p>Thus, for every <span class="math inline">\(x \ge 0\)</span>, the
+equation <span class="math display">\[\rho \, \Psi&#39;(\rho) =
+x\]</span> has a unique solution <span class="math inline">\(\rho =
+\rho(x)\)</span> with <span class="math inline">\(\rho \in
+(0,1)\)</span> and <span class="math inline">\(\rho \to 1^{-}\)</span>
+as <span class="math inline">\(x \to \infty\)</span>.</p>
+<p>The function <span class="math display">\[f(\rho) : [0,1) \to [0,
+\infty), \quad \rho \mapsto \rho \, \Psi&#39;(\rho),\]</span> also
+satisfies <span class="math display">\[f^{(k)}(\rho) &gt; 0
+\quad\text{whenever } \rho \in (0,1),
+  \quad\text{and}\quad
+  f^{(k)}(\rho) \to \infty \quad\text{as } \rho \to 1^{-}.\]</span>
+Since <span class="math inline">\(f(\rho(x)) = x\)</span>, then <span
+class="math inline">\(\rho(x)\)</span> is the inverse function of <span
+class="math inline">\(f\)</span>. It follows that <span
+class="math display">\[\rho&#39;(x) = \frac{1}{f&#39;(\rho(x))} \quad (x
+\ge x_0),\]</span> and by induction on <span
+class="math inline">\(k\)</span> we can show that <span
+class="math inline">\(\rho^{(k)}\)</span> exists for every <span
+class="math inline">\(k \in \mathbb{N}\)</span> when <span
+class="math inline">\(x \ge x_0\)</span>.</p>
+<p>It is useful to write <span class="math display">\[X =
+\frac{1}{\log(1/\rho)}
+  \quad\text{so that}\quad
+  \rho = e^{-1/X},\]</span> and we use this relationship throughout.</p>
+<p>For any arbitrary <span class="math inline">\(\beta \in
+\mathbb{R}\)</span>, let <span class="math inline">\(R(\beta)\)</span>
+and <span class="math inline">\(I(\beta)\)</span> be the real and
+imaginary parts of <span class="math inline">\(\Psi(\rho
+e^{i\beta})\)</span>, respectively. By Taylor’s Theorem, we obtain <span
+class="math display">\[\Psi(\rho e(\alpha))
+  = \Psi(\rho)
+    + \alpha 2\pi i \rho \, \Psi&#39;(\rho)
+    - \tfrac12 \alpha^2 4\pi^2 \left( \rho \, \Psi&#39;(\rho) + \rho^2
+\, \Psi&#39;&#39;(\rho) \right)\]</span> <span class="math display">\[+
+\tfrac{1}{3} w |\alpha|^3 \left| 8\pi^3 \rho^3 \Psi&#39;(\rho)
+      + 24 \pi^2 \rho^2 \Psi&#39;&#39;(\rho) + 8\pi^3 \rho^3
+\Psi&#39;&#39;&#39;(\rho) \right|,\]</span> where <span
+class="math inline">\(\alpha \in \mathbb{C}\)</span> with <span
+class="math inline">\(|w| \le 1\)</span>.</p>
+<p>Let <span class="math inline">\(\rho(n)\)</span> be defined as the
+solution for <span class="math inline">\(\rho \, \Psi&#39;(\rho) =
+n\)</span>, then the second term in the Cauchy’s integral would cancel
+with <span class="math inline">\(\mathrm{e(n\alpha)}\)</span>.</p>
+<p>The method is then similar to the Hardy–Littlewood method. Let <span
+class="math inline">\(A\)</span> be an arbitrary positive number; we
+construct <span class="math display">\[\mathfrak{M}(q,a) = \left\{
+\alpha \in \left[ -\tfrac12, \tfrac12 \right] :
+     \left| \alpha - \frac{a}{q} \right| \le (\log X)^A q^{-1} X^{-1}
+\right\},\]</span> and <span class="math display">\[\mathfrak{M} =
+\bigcup_{\substack{1 \le q \le (\log X)^A \\ (a,q)=1}}
+\mathfrak{M}(q,a),
+  \qquad
+  \mathfrak{m} = \left[ -\tfrac12, \tfrac12 \right] \setminus
+\mathfrak{M}.\]</span> If <span class="math inline">\(\alpha \in
+\mathfrak{m}\)</span> with <span class="math inline">\(X &gt;
+X_0(A)\)</span>, let <span class="math display">\[S_n = \sum_{p \le n}
+\mathrm{e(\alpha p)},\]</span> then with a similar method from the minor
+arc estimation in the sum of three primes, we obtain <span
+class="math display">\[S_n \ \ll\ (n q^{-1/2} + n^{4/5} + n^{1/2}
+q^{1/2} \,) (\log n)^3.\]</span> Let <span class="math display">\[F(z) =
+\sum_{p} z^{p}.\]</span> Then <span class="math display">\[F(\rho
+e(\alpha)) = (1 - \rho) \sum_{n=1}^\infty S_n \rho^n\]</span> and <span
+class="math display">\[\Psi(z) = \sum_{k} \frac{1}{k}
+F(z^k).\]</span></p>
+<p>Therefore, from the bound of <span
+class="math inline">\(S_n\)</span>, we obtain for <span
+class="math inline">\(\alpha \in \mathfrak{m}\)</span>, <span
+class="math display">\[\Psi(\rho e(\alpha)) \ \ll\ X (\log X)^{3 -
+4/7}.\]</span></p>
+<p>As for <span class="math inline">\(\alpha \in \mathfrak{M}\)</span>,
+<span class="math inline">\(\beta = \alpha - \frac{a}{q}\)</span> and
+<span class="math inline">\(|\beta| \le (\log X)^A q^{-1}
+X^{-1}\)</span>, then <span class="math display">\[F(\rho e(a/q +
+\beta))
+  = \sum_{\substack{\ell = 1 \\ (\ell, q) = 1}}^{q}
+\mathrm{e(\frac{a\ell}{q})}
+    \sum_{p \equiv \ell \, (\mathrm{mod} \, q)} \rho^{p} \,
+\mathrm{e(\beta p)}
+    + O\big( \omega(q) \big).\]</span> For the inner sum, by the
+Siegel–Walfisz theorem, we have <span class="math display">\[\sum_{p
+\equiv \ell \, (\mathrm{mod} \, q)} \rho^p \, \mathrm{e(\beta p)}
+  = \int_{2}^{\infty} \rho^u \, \mathrm{e(\beta u)} \, \mathrm{d}\left(
+\sum_{p \equiv \ell \, (\mathrm{mod} \, q)} 1 \right)\]</span> <span
+class="math display">\[= \int_{2}^{\infty} \rho^u \, \mathrm{e(\beta u)}
+\, \mathrm{d}\left( \frac{1}{\varphi(q)} \int_{2}^{u}
+\frac{\mathrm{d}t}{\log t}
+      + O\!\left( u \, e^{-c \sqrt{\log u}} \right) \right).\]</span> By
+<span class="math inline">\(\rho = e^{-1/X}\)</span>, we obtain the
+error term <span class="math display">\[\ll C(1+X|\beta|) X e^{-c
+\sqrt{\log X}}.\]</span> Then by estimating the integral, we have <span
+class="math display">\[\Psi(\rho e(\alpha))
+  = \frac{\pi^2 (-1)^{\omega(q)}}{6 q^2 (\log X) (1 - 2\pi i \beta)}
+    \prod_{p \mid q} \frac{p}{p-1}
+    + O\!\left( \frac{X \log \log X}{(\log X)^2} \right).\]</span> Let
+<span class="math display">\[\left( \rho
+\frac{\mathrm{d}}{\mathrm{d}\rho} \right)^{j} \Psi(\rho)
+  = \sum_{k=1}^\infty k^{j-1} \rho^{kp} \, k p.\]</span></p>
+<p>Also, by Mellin transform of <span
+class="math inline">\(\Gamma(s)\)</span> function for <span
+class="math inline">\(\Re s &gt; 0\)</span>, <span
+class="math inline">\(c &gt; 0\)</span>, <span
+class="math display">\[\frac{1}{2\pi i} \int_{c-i\infty}^{c+i\infty}
+\Gamma(s) z^{-s} \, \mathrm{d}s
+  = \mathrm{e}^{-z}\]</span> We have <span class="math display">\[\left(
+\rho \frac{\mathrm{d}}{\mathrm{d}\rho} \right)^j \Psi(\rho)
+  = \frac{1}{2\pi i} \sum_{p} \sum_{k=1}^\infty p^{j} k^{j-1}
+    \int_{c-i\infty}^{c+i\infty} (\frac{pk}{X})^{-s} X^s \Gamma(s) \,
+\mathrm{d}s\]</span> <span class="math display">\[= \frac{1}{2\pi i}
+\int_{c-i\infty}^{c+i\infty} P(s-j) \, \zeta(s+1-j) \, X^s \Gamma(s) \,
+\mathrm{d}s,\]</span> where <span class="math display">\[P(s) = \sum_{p}
+\frac{1}{p^s},\]</span> and <span class="math inline">\(c\)</span> is
+real with <span class="math inline">\(c &gt; j+1\)</span>. We have <span
+class="math display">\[P(s) = \sum_{p} \sum_{\ell=1}^\infty \ell
+^{-1}p^{-\ell s}
+         - \sum_{p} \sum_{k \ge 2} k^{-2}p^{-ks}
+       = \log \zeta(s) - D(s).\]</span> Given any <span
+class="math inline">\(\delta &gt; 0\)</span>, <span
+class="math inline">\(D(s)\)</span> converges absolutely and uniformly
+for <span class="math inline">\(\Re(s) \ge \tfrac12 +
+\delta\)</span>.</p>
+<p>If <span class="math inline">\(P(s-j)\)</span> is replaced by <span
+class="math inline">\(D(s-j)\)</span> in the integrand, then we let
+<span class="math inline">\(c = j+ \frac{3}{4}\)</span>, and a crude
+estimation gives the bound <span class="math inline">\(\ll
+X^{3/4+j}\)</span>.</p>
+<p>Then we replace <span class="math inline">\(P(s-j)\)</span> with
+<span class="math inline">\(\log \zeta(s-j)\)</span>. This function has
+a singularity at <span class="math inline">\(s = j+1\)</span> and is
+analytic in the zero-free region for <span
+class="math inline">\(\zeta(s-j)\)</span> except for <span><span
+class="math inline">\(s\ \)</span>:  <span class="math inline">\(s =
+\sigma\)</span>, <span class="math inline">\(\sigma \le j+1\)</span>
+</span>.</p>
+<p>Let <span class="math inline">\(T = \exp(\sqrt{\log X})\)</span>.
+Then the integral can be truncated at height <span
+class="math inline">\(T\)</span> with an acceptable error and the
+remaining part moved across the line <span class="math inline">\(\Re s =
+1 + j - c/\log T\)</span>, where <span class="math inline">\(c\)</span>
+is a small constant, except a loop is made about the singularity at
+<span class="math inline">\(s = 1+j\)</span>. The loop begins along the
+bottom and top and edges of the “cut”.</p>
+<p>All of the different parts of the contour except for the parts along
+the cut again contribute only to the error term. Along the bottom and
+the top edges of the cut of the function <span
+class="math inline">\(\zeta(s+1-j) X^s \Gamma(s)\)</span> has the same
+value, but <span class="math inline">\(\log \zeta(s-j)\)</span> differs
+by <span class="math inline">\(2\pi i\)</span>. Hence the contribution
+from the parts along the cut is <span
+class="math display">\[\frac{1}{2\pi i} \int_{0}^{\frac{c}{\log T}} 2\pi
+i \, \zeta(2-u) \, X^{j+1-u} \, \Gamma(1+j-u) \, \mathrm{d}u\]</span>
+and since, for any given <span class="math inline">\(j\)</span>, <span
+class="math display">\[\zeta(2-u) \, \Gamma(1+j-u) = \zeta(2) \,
+\Gamma(1+j) + O(u)\]</span> uniformly for <span class="math inline">\(u
+\in [0, \frac{1}{2}]\)</span> it follows that the above is <span
+class="math display">\[X^{j+1} \frac{\zeta(2) \, \Gamma(1+j)}{\log X} +
+O\!\left( \frac{X^{j+1}}{(\log X)^2} \right).\]</span></p>
+<p>And since <span class="math display">\[\rho^j \Psi^{(j)}(\rho)
+=  \sum_{i=1}^j C_{i,j} \left( \rho \frac{\mathrm{d}}{\mathrm{d}\rho}
+\right)^i \Psi(\rho),\]</span> where the <span
+class="math inline">\(C_{i,j}\)</span> are real numbers with <span
+class="math inline">\(C_{j,j} = 1\)</span>, then by induction we can
+prove <span class="math display">\[\Psi^{(j)}(\rho) = \frac{\pi^2 j! \,
+X^{j+1}}{6 \log X} + O\!\left( \frac{X^{j+1}}{(\log X)^2}
+\right).\]</span> Recall we define <span
+class="math inline">\(\rho(x)\)</span> as the solution to <span
+class="math inline">\(\rho&#39; \Psi(\rho) = x\)</span>, then <span
+class="math display">\[x = \frac{\pi^2X(x)^2}{6 \log X(x)} + O\left(
+\frac{X(x)^{2}}{(\log X(x))^2} \right),\]</span> <span
+class="math display">\[\begin{aligned}
+\log x &amp;= \log \frac{\pi^2X(x)^2}{6 \log X(x)} + \log \left( 1 +
+O\left( \frac{1}{\log X(x)} \right) \right)\\
+&amp;= 2 \log  X(x) - \log \log X(x) + O(1),\end{aligned}\]</span> <span
+class="math display">\[\log \log x = \log \log X(x) + O(1),\]</span>
+<span class="math display">\[\log X(x) = \frac{1}{2} \log x +
+\frac{1}{2} \log \log x + O(1),\]</span> <span
+class="math display">\[X(x)^2\left( 1 + O\left( \frac{1}{\log X} \right)
+\right) = \frac{6x}{\pi^2} \left( \frac{1}{2} \log x + \frac{1}{2} \log
+\log x + O(1) \right),\]</span> <span class="math display">\[X(x)^2 =
+\frac{3}{\pi^2} x\log x \left( 1 + \frac{\log \log x}{\log x} + O\left(
+\frac{1}{\log x} \right) \right),\]</span> <span
+class="math display">\[X(x) = \frac{\sqrt{3x\log x}}{\pi} \left( 1 +
+\frac{\log \log x}{2\log x} + O\left( \frac{1}{\log x} \right)
+\right).\]</span> Hence, <span class="math display">\[\rho(x) = 1 +
+O\!\left( \frac{1}{X(x)} \right)
+= 1 + O\!\left( \frac{1}{\sqrt{x\log x}} \right)\]</span> <span
+class="math display">\[\Psi&#39;(\rho(x)) = x + O\!\left(
+x^{\frac{1}{2}} (\log x)^{-\frac{1}{2}} \right)\]</span> <span
+class="math display">\[x \log \frac{1}{\rho(x)} = \frac{x}{X(x)}
+= \pi \frac{\sqrt{x}}{\sqrt{3 \log x}} \left( 1 - \frac{\log \log x}{2
+\log x}  +  O\big(\frac{1}{\log x}\big) \right)\]</span> and, <span
+class="math display">\[\Psi(\rho(x)) = \frac{\pi^2 X(x)}{6 \log X(x)} +
+O\!\left( \frac{X(x)}{(\log X(x))^{2}} \right)\]</span> <span
+class="math display">\[= \pi \frac{\sqrt{x}}{\sqrt{3 \log x}} \left( 1 +
+\frac{\log \log x}{\log x} + O\!\left( \frac{1}{\log x} \right)
+\right)\]</span> Furthermore, when <span class="math inline">\(j \ge
+1\)</span>, <span class="math display">\[\begin{aligned}
+    \Psi^{(j)}(\rho(x))
+&amp;= j! \, X(x)^{j-1} \, \Psi&#39;(\rho(x)) \left( 1 + O\!\left(
+\frac{1}{\log X(x)} \right) \right)\\
+&amp;= j! \, (3x \log x)^{\frac{j-1}{2}} \, \pi^{1-j} \, x \left( 1 +
+\frac{\log \log x}{\log x} + O\!\left( \frac{1}{\log x} \right)
+\right)\left( 1 + O\!\left( \frac{1}{\log x} \right) \right)\\
+&amp;= j! \, \pi^{1-j} (3 \log x)^{\frac{j-1}{2}} \, x^{\frac{j+1}{2}}
+\left( 1 + O\!\left( \frac{\log \log x}{\log x} \right)
+\right)\end{aligned}\]</span> and similarly for <span
+class="math display">\[\Psi_{(j)}(\rho(x)) = \left( \rho \frac{d}{d\rho}
+\right)^j \Psi(\rho)\]</span> Let <span class="math inline">\(A =
+40\)</span>, and by separate <span
+class="math inline">\([-\frac{1}{2},\frac{1}{2}]=[-\tau,\tau]\cup[-\frac{1}{2},-\tau
+]\cup[\tau,\frac{1}{2}]\)</span>, with <span class="math inline">\(\tau
+= (\log X)^{-\frac{1}{4}} X^{-1}\)</span>, then for <span
+class="math inline">\(\alpha \ge |\tau|\)</span>, by estimation of the
+major and minor arc we obtain the error term <span
+class="math display">\[p(n) = \rho^{-n} \int_{\mathcal{-\tau}}^{\tau}
+\Phi(\rho \, \mathrm{e(\alpha)}) \, \mathrm{e(-n\alpha)} d\alpha +
+O\!\left( \frac{\Psi(\rho)}{\rho^n n^{10}} \right)\]</span> By previous
+estimation of each term of the Taylor’s expansion of the integrand, it
+follows that <span class="math display">\[p(n) = \frac{\rho(n)^{-n} \,
+\Phi(\rho(n))}{\sqrt{2\pi \, \Psi_2(\rho(n))}} \left( 1 + O\!\left(
+n^{-\frac{1}{5}} \right) \right)\]</span> and <span
+class="math display">\[\frac{1}{\sqrt{2\pi \, \Psi_2(\rho(n))}}
+\sim 2^{-1} (3 \log n)^{-\frac{1}{4}} \, n^{-\frac{3}{4}}\]</span></p>
+</body>
+</html>
